@@ -147,8 +147,4 @@ def index():
     return render_template('index.html', **template_data, sentiments=sentiments)
 
 if __name__ == '__main__':
-<<<<<<< HEAD
-    app.run(debug=True)
-=======
     app.run(debug=True, host=""0.0.0.0")
->>>>>>> ef6957957ab1db9cbdfd651ed3342d7f03e837b4
