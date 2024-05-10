@@ -108,14 +108,47 @@ for sentiment, count in sentiment_counts.items():
     sentiment_percentage = (count / len(reviews_df['reviews_text'])) * 100
     overall_sentiment[sentiment] = "{:.2f}".format(sentiment_percentage)
 
+keywords = {
+    "Good Quality": ["good quality", "well made","beautiful", "effective", "long lasting", "amazing"],
+    "Effect on skin": ["wrinkles", "fine lines"],
+    "Sun Protection":["protection","beautiful"],
+    "Hyderation": ["hydrated"],
+    "Soft and Creamy": ["soft", "creamy", "smooth",],
+    "Brightness": ["radiant", "dull", "bright", "beautiful"],
+    "Performance": ["impressive", "excellent", "outstanding", "disappointing","amazing"],
+    "Anti aging": ["youthful", "aging", "anti-aging"],
+    "Texture": ["smooth", "greasy","dry","sticky",],
+    "Appearance": ["radiant", "glow", "beautiful", "dull", "bright", "luminous"], 
+    "Cost": ["expensive", "costly","worth", "affordable","cheap"],
+    "Portability":["easy","small","handy"]
+}
+
+sentiments = {}
+for aspect, aspect_keywords in keywords.items():
+    aspect_sentiments = []
+    for keyword in aspect_keywords:
+        keyword_sentiments = [TextBlob(review_text).sentiment.polarity for review_text in reviews_df['reviews_text'] if keyword in review_text.lower()]
+        if keyword_sentiments:
+            avg_sentiment = sum(keyword_sentiments) / len(keyword_sentiments)
+            aspect_sentiments.append(avg_sentiment)
+    if aspect_sentiments:
+        avg_aspect_sentiment = sum(aspect_sentiments) / len(aspect_sentiments)
+        sentiment_color = "lightgreen" if avg_aspect_sentiment > 0.5 else ("red" if avg_aspect_sentiment < -0.5 else "yellow")
+        sentiments[aspect] = sentiment_color
+
+
 @app.route('/')
 def index():
     template_data = {
         'summary': summary,
         'classification_report': classification_report_data,
-        'overall_sentiment': overall_sentiment
+        'overall_sentiment': overall_sentiment,
     }
-    return render_template('index.html', **template_data)
+    return render_template('index.html', **template_data, sentiments=sentiments)
 
 if __name__ == '__main__':
+<<<<<<< HEAD
+    app.run(debug=True)
+=======
     app.run(debug=True, host=""0.0.0.0")
+>>>>>>> ef6957957ab1db9cbdfd651ed3342d7f03e837b4
