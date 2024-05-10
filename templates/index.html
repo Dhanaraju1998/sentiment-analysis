@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Review Analysis</title>
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: center;
+        padding: 8px;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      @media only screen and (max-width: 600px) {
+        table {
+          border: 0;
+        }
+
+        th {
+          display: none;
+        }
+
+        tr {
+          display: block;
+          border-bottom: 1px solid #dddddd;
+        }
+
+        td {
+          display: block;
+          text-align: center;
+          border-bottom: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center">Review Analysis Summary</h1>
+
+    <h2>Classification Report</h2>
+    <table>
+      <tr>
+        <th></th>
+        <th>Precision</th>
+        <th>Recall</th>
+        <th>F1-Score</th>
+        <th>Support</th>
+      </tr>
+      <tr>
+        <td>Negative</td>
+        <td>
+          {{ '%.2f'|format(classification_report['negative']['precision']) }}
+        </td>
+        <td>
+          {{ '%.2f'|format(classification_report['negative']['recall']) }}
+        </td>
+        <td>
+          {{ '%.2f'|format(classification_report['negative']['f1-score']) }}
+        </td>
+        <td>
+          {{ '%.2f'|format(classification_report['negative']['support']) }}
+        </td>
+      </tr>
+      <tr>
+        <td>Neutral</td>
+        <td>
+          {{ '%.2f'|format(classification_report['neutral']['precision']) }}
+        </td>
+        <td>{{ '%.2f'|format(classification_report['neutral']['recall']) }}</td>
+        <td>
+          {{ '%.2f'|format(classification_report['neutral']['f1-score']) }}
+        </td>
+        <td>
+          {{ '%.2f'|format(classification_report['neutral']['support']) }}
+        </td>
+      </tr>
+      <tr>
+        <td>Positive</td>
+        <td>
+          {{ '%.2f'|format(classification_report['positive']['precision']) }}
+        </td>
+        <td>
+          {{ '%.2f'|format(classification_report['positive']['recall']) }}
+        </td>
+        <td>
+          {{ '%.2f'|format(classification_report['positive']['f1-score']) }}
+        </td>
+        <td>
+          {{ '%.2f'|format(classification_report['positive']['support']) }}
+        </td>
+      </tr>
+    </table>
+
+    <h2>Overall Sentiment</h2>
+    <table>
+      <tr>
+        <th>Sentiment</th>
+        <th>Percentage</th>
+      </tr>
+      <tr>
+        <td>Positive</td>
+        <td>{{ overall_sentiment['positive'] }}</td>
+      </tr>
+      <tr>
+        <td>Negative</td>
+        <td>{{ overall_sentiment['negative'] }}</td>
+      </tr>
+      <tr>
+        <td>Neutral</td>
+        <td>{{ overall_sentiment['neutral'] }}</td>
+      </tr>
+    </table>
+    <h2 style="font-weight: 700">{{ summary }}</h2>
+  </body>
+</html>
